@@ -1,11 +1,22 @@
-var container = document.getElementById('container');
+var array = [
+    "pick up drycleaning",
+    "clean rooms",
+    "drink water"
+];
 
-for (var x=0;x<=5;x++){
-    var counter1=x;
-    let counter2=x;
-    const counter3=x;
-    counter3 = 1;
+for (var index in array){
+    var value=array[index];
+    console.log(`${index}: ${value}`);
 }
-console.log(counter1);
-console.log(counter2);
-console.log(counter3);
+
+for (var value of array){
+    console.log(`${value}`);
+}
+/*
+0: pick up drycleaning
+1: clean rooms
+2: drink water
+pick up drycleaning
+clean rooms
+drink water
+*/

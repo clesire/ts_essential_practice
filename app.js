@@ -1,10 +1,21 @@
-var container = document.getElementById('container');
-for (var x = 0; x <= 5; x++) {
-    var counter1 = x;
-    var counter2 = x;
-    var counter3 = x;
-    counter3 = 1;
+var array = [
+    "pick up drycleaning",
+    "clean rooms",
+    "drink water"
+];
+for (var index in array) {
+    var value = array[index];
+    console.log(index + ": " + value);
 }
-console.log(counter1);
-console.log(counter2);
-console.log(counter3);
+for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
+    var value = array_1[_i];
+    console.log("" + value);
+}
+/*
+0: pick up drycleaning
+1: clean rooms
+2: drink water
+pick up drycleaning
+clean rooms
+drink water
+*/ 
