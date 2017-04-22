@@ -1,21 +1,36 @@
-var array = [
-    "pick up drycleaning",
-    "clean rooms",
-    "drink water"
-];
-for (var index in array) {
-    var value = array[index];
-    console.log(index + ": " + value);
+var container = document.getElementById('container');
+function Counter1(el) {
+    this.count = 0;
+    el.innerHTML = this.count;
+    el.addEventListener('click', function () {
+        //1. causing NaN on click
+        //1. different scope
+        this.count += 1;
+        el.innerHTML = this.count;
+    });
 }
-for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
-    var value = array_1[_i];
-    console.log("" + value);
+function Counter2(el) {
+    this.count = 0;
+    el.innerHTML = this.count;
+    //2. creates local var to reference this
+    var _this = this;
+    el.addEventListener('click', function () {
+        _this.count += 1;
+        el.innerHTML = _this.count;
+    });
 }
-/*
-0: pick up drycleaning
-1: clean rooms
-2: drink water
-pick up drycleaning
-clean rooms
-drink water
-*/ 
+function Counter3(el) {
+    var _this = this;
+    this.count = 0;
+    el.innerHTML = this.count;
+    el.addEventListener('click', function () {
+        _this.count += 1;
+        el.innerHTML = _this.count;
+    }); //returns the output of the expression
+}
+new Counter3(container);
+var filtered1 = [1, 2, 3].filter(function (x) {
+    return x > 0;
+});
+var filtered2 = [1, 2, 3].filter(function (x) { return x > 0; });
+var filtered3 = [1, 2, 3].filter(function (x, y) { return x > y; });

@@ -1,22 +1,44 @@
-var array = [
-    "pick up drycleaning",
-    "clean rooms",
-    "drink water"
-];
+var container = document.getElementById('container');
 
-for (var index in array){
-    var value=array[index];
-    console.log(`${index}: ${value}`);
+function Counter1(el) {
+    this.count = 0;
+    el.innerHTML = this.count;
+    el.addEventListener('click',
+        function (){
+            //1. causing NaN on click
+            //1. different scope
+            this.count += 1; 
+            el.innerHTML = this.count;
+        }
+    )
 }
 
-for (var value of array){
-    console.log(`${value}`);
+function Counter2(el) {
+    this.count = 0;
+    el.innerHTML = this.count;
+    //2. creates local var to reference this
+    let _this = this;
+    el.addEventListener('click',
+        function (){
+            _this.count += 1;
+            el.innerHTML = _this.count;
+        }
+    )
 }
-/*
-0: pick up drycleaning
-1: clean rooms
-2: drink water
-pick up drycleaning
-clean rooms
-drink water
-*/
+
+function Counter3(el) {
+    this.count = 0;
+    el.innerHTML = this.count;
+    el.addEventListener('click',
+        ()=>{
+            this.count += 1;
+            el.innerHTML = this.count;
+        }); //returns the output of the expression
+}
+new Counter3(container);
+
+var filtered1 = [1,2,3].filter((x) => {
+    return x > 0;
+})
+var filtered2 = [1,2,3].filter(x => x>0)
+var filtered3 = [1,2,3].filter((x,y) => x>y)
