@@ -1,44 +1,41 @@
-var container = document.getElementById('container');
+var array = [123, "pick up drycleaning", false];
+var [id, title, completed] = array;
 
-function Counter1(el) {
-    this.count = 0;
-    el.innerHTML = this.count;
-    el.addEventListener('click',
-        function (){
-            //1. causing NaN on click
-            //1. different scope
-            this.count += 1; 
-            el.innerHTML = this.count;
-        }
-    )
+var a=1;
+var b=5;
+
+//before to swap
+var temp=a;
+a=b;
+b=temp;
+//with destructuring
+[a,b] = [b,a];
+
+//also work with objects or mapping function return vals
+//the values assinged not by locaions, 
+//but by matching the name of the property & variable
+function getTodo(id) {
+    var todo = {
+        id_o:123,
+        title_o: "pick up drycleaning",
+        completed_o: false
+    }
+    return todo;
 }
 
-function Counter2(el) {
-    this.count = 0;
-    el.innerHTML = this.count;
-    //2. creates local var to reference this
-    let _this = this;
-    el.addEventListener('click',
-        function (){
-            _this.count += 1;
-            el.innerHTML = _this.count;
-        }
-    )
-}
+var {id_o: todoId, title_o, completed_o} = getTodo(123);
 
-function Counter3(el) {
-    this.count = 0;
-    el.innerHTML = this.count;
-    el.addEventListener('click',
-        ()=>{
-            this.count += 1;
-            el.innerHTML = this.count;
-        }); //returns the output of the expression
-}
-new Counter3(container);
+//countdown function from 2.optional_param
+function countdown({ 
+    initial, 
+    final: final=0,
+    interval: interval=1,
+    initial: current    
+}) {
 
-var filtered1 = [1,2,3].filter((x) => {
-    return x > 0;
-})
-var filtered2 = [1,2,3].filter(x => x>0)
-var filtered3 = [1,2,3].filter((x,y) => x>y)
+    var current = initial;
+    while (current > final) {
+        console.log(current);
+        current -= interval;
+    }
+}
