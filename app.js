@@ -1,29 +1,44 @@
-var array = [1, 2, 3];
-var array2 = [1, 2, 3];
-var KeyValuePair = (function () {
-    function KeyValuePair(key, value) {
-        this.key = key;
-        this.value = value;
-    }
-    return KeyValuePair;
-}());
-var pair1 = new KeyValuePair(1, 'first');
-var pair2 = new KeyValuePair('second', new Date(Date.now()));
-var pair3 = new KeyValuePair(3, 'third');
-var KeyValuePairPrinter = (function () {
-    function KeyValuePairPrinter(pairs) {
-        this.pairs = pairs;
-    }
-    KeyValuePairPrinter.prototype.print = function () {
-        for (var _i = 0, _a = this.pairs; _i < _a.length; _i++) {
-            var p = _a[_i];
-            console.log(p.key + ":" + p.value);
-        }
+//before no way to prevent adding length 
+//of different types of parameters
+// function totalLen(
+//     x: {length:number},
+//     y: {length:number}) {
+//     var total: number = x.length + y.length;
+//     return total;
+// }
+// var l = totalLen('hello',[22,33]);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-    return KeyValuePairPrinter;
-}());
-var printer = new KeyValuePairPrinter([pair1, pair3]);
-//pair2 does not share the same generic parameters 
-//thus different type of object
-//var printer=new KeyValuePairPrinter([pair1,pair2])
-printer.print();
+})();
+//with generic + anonymous type param
+function totalLen(x, y) {
+    var total = x.length + y.length;
+    return total;
+}
+var l1 = totalLen('hello', [22, 33]);
+var l2 = totalLen('hello', 'world');
+function totalLenI(x, y) {
+    var total = x.length + y.length;
+    return total;
+}
+/***BE AWARE**********/
+//the params can be any type compatible with type T
+//including those inherit from T
+var CustomArray = (function (_super) {
+    __extends(CustomArray, _super);
+    function CustomArray() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return CustomArray;
+}(Array));
+var len = totalLen([1, 2, 3], new CustomArray());
+//Another caveat: not allowed to refer to generic param
+//that you defined in the same type list
+//class KeyValuePairPrinter<T,U, V extends KeyValuePaair<T,U>> 
