@@ -1,33 +1,10 @@
-function add() {
-    var values = Array.prototype.splice.call(arguments, [1]),
-        total = 0;
-
-    for (var value of values) {
-        total += value;
-    }
-    return total;
+const osPrefix = 'os_';
+var support = {
+    [osPrefix + 'Windows']: isSupported('Windows'),
+    [osPrefix + 'iOS']: isSupported('iOS'),
+    [osPrefix + 'Android']: isSupported('Android'),
 }
 
-function calculate(action, ...values) {
-    var total = 0;
-    for (var value of values) {
-        switch(action){
-            case 'add':
-                total += value;
-                break;
-            case 'sub':
-                total -= value;
-                break;
-        }
-    }
-    return total;
+function isSupported(os) {
+    return Math.random() >= 0.5;
 }
-calculate('add', 1,2,3,4,5);
-
-var source = [3,4,5];
-var target = [1,2, ...source, 6,7];
-
-var list = [1,2,3];
-var toAdd = [4,5,6];
-//Array.prototype.push.apply(list, toAdd);
-list.push(...toAdd);
