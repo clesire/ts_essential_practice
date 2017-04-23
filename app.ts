@@ -30,3 +30,45 @@ enum TodoState {
     New = 1,
     Active, Complete, Deleted
 }
+//generally dont want to apply setter/getter to obj literal
+var todo = {
+    name: 'Pick up laundry',
+    get state() {
+        return this._state;
+    },
+    set state(newState){
+        if (newState == TodoState.Complete){
+            var canBeCompleted = 
+                this.state == TodoState.Active
+                || this.state == TodoState.Deleted;
+            if (!canBeCompleted){
+                throw "State not Active|Deleted; Can't Complete";
+            }
+        }
+        this._state = newState;
+    }
+}
+todo.state = TodoState.Complete;
+//use class instead
+class SmartTodo {
+    _state: TodoState;
+    name: string;
+    get state() {
+        return this._state;
+    }
+    set state(newState){
+        if (newState == TodoState.Complete){
+            var canBeCompleted = 
+                this.state == TodoState.Active
+                || this.state == TodoState.Deleted;
+            if (!canBeCompleted){
+                throw "State not Active|Deleted; Can't Complete";
+            }
+        }
+        this._state = newState;
+    }
+    constructor(name:string){
+        this.name = name;
+    }
+}
+var smartTodo = new SmartTodo('pick up laundry');
