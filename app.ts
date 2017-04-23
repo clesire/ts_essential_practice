@@ -1,42 +1,20 @@
 export {};
 interface Todo {
     name: string;
-    completed?: boolean;
+    state: TodoState;
 }
-interface jQuery {
-    (select: (string | any)): jQueryElement; 
-    fn: any;
-    version: number;
+var todo: Todo = {
+    name: "Pick up laundry",
+    state: TodoState.New
 }
-interface jQueryElement {
-    data(name: string): any;
-    data(name: string, data: any): jQueryElement;
-    //jQuery is 3rd party lib
-    //BAD idea to update such interface 
-    //just to add my own custom ext
-    //todo(): Todo;
-    //todo(todo: Todo): jQueryElement;
+enum TodoState {
+    New = 1,
+    Active,
+    Complete,
+    Deleted
 }
-//to append ext, just create another defs
-interface jQueryElement {
-    todo(): Todo;
-    todo(todo: Todo): jQueryElement;
-}
-//extend default jQuery API by attaching a new fxn
-$.fn.todo = function(todo?: Todo): Todo {
-    if (todo) {
-        $(this).data('todo', todo)
-    } else {
-        return $(this).data('todo');
+function delete1(todo1: Todo){
+    if (todo1.state != TodoState.Complete) {
+        throw new Error("Can't delete incomplete task");
     }
 }
-var $ = <jQuery>function(selector) {
-    //Find DOM element
-}
-var todo = {
-    name: "pick up laundry",
-}
-var container = $('#container')
-container.data('todo', todo);
-var savedTodo = container.data('todo');
-container.todo(todo);

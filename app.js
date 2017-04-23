@@ -1,21 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-//extend default jQuery API by attaching a new fxn
-$.fn.todo = function (todo) {
-    if (todo) {
-        $(this).data('todo', todo);
-    }
-    else {
-        return $(this).data('todo');
-    }
-};
-var $ = function (selector) {
-    //Find DOM element
-};
 var todo = {
-    name: "pick up laundry",
+    name: "Pick up laundry",
+    state: TodoState.New
 };
-var container = $('#container');
-container.data('todo', todo);
-var savedTodo = container.data('todo');
-container.todo(todo);
+var TodoState;
+(function (TodoState) {
+    TodoState[TodoState["New"] = 1] = "New";
+    TodoState[TodoState["Active"] = 2] = "Active";
+    TodoState[TodoState["Complete"] = 3] = "Complete";
+    TodoState[TodoState["Deleted"] = 4] = "Deleted";
+})(TodoState || (TodoState = {}));
+function delete1(todo1) {
+    if (todo1.state != TodoState.Complete) {
+        throw new Error("Can't delete incomplete task");
+    }
+}
