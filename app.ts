@@ -1,24 +1,23 @@
-//not possible in JS; function overload not same as in C#/Java
-//in JS, only 1 implementation; or 2nd just overwrites the first
-//function totalLen(x: string, y: string): number {}
-//function totalLen(x: any[], y: any[]): number {}
+export {};
+//disambiguation for whether a file
+//= module (and have its own scope)
+//= script (and share the global scope with other scripts).
+//TS's solution=to simply state that a module is any file
+//which contains an import or export.
 
-function totalLen(x: string, y: string): number
-function totalLen(x: any[], y: any[]): number
-function totalLen(x: (string|any[]), 
-                  y: (string|any[])): number { 
-    let total: number = x.length + y.length;
-
-    x.slice(0);
-    //type guard syntax
-    if (x instanceof Array){
-        x.push('abc');        
-    }
-    //possible because string is a primitive type
-    //if(typeof x === 'string'){
-    if (x instanceof String){
-        x.substr(1);
-    }
-    return total;
+//data structure
+interface Todo {
+    name: string;
+    completed?: boolean; //optional
 }
-totalLen([1,2,3],'hello')
+//service
+interface ITodoService {
+    add(todo: Todo): Todo;
+    delete(todoId: number): void;
+    getAll(): Todo[];
+    getById(todoId: number): Todo;
+}
+//var todo = <Todo>{};
+let todo: Todo = {
+    name: "pick up"
+};
