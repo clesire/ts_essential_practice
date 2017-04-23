@@ -1,4 +1,3 @@
-"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -9,14 +8,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-Object.defineProperty(exports, "__esModule", { value: true });
-var TodoState;
-(function (TodoState) {
-    TodoState[TodoState["New"] = 1] = "New";
-    TodoState[TodoState["Active"] = 2] = "Active";
-    TodoState[TodoState["Complete"] = 3] = "Complete";
-    TodoState[TodoState["Deleted"] = 4] = "Deleted";
-})(TodoState || (TodoState = {}));
 var TodoService = (function () {
     function TodoService(todos) {
         this.todos = todos;
@@ -32,13 +23,31 @@ var TodoService = (function () {
         configurable: true
     });
     TodoService.prototype.add = function (todo) {
-        var newId = this.nextId;
+        todo.id = this.nextId;
+        this.todos.push(todo);
+        return todo;
     };
     TodoService.prototype.getAll = function () {
-        return this.todos;
+        //actual todo items exposed to manipulation
+        //return this.todos;
+        //performant way to clone objects
+        var clone = JSON.stringify(this.todos);
+        return JSON.parse(clone);
     };
     TodoService.getNextId = function () {
         return TodoService._lastId += 1;
+    };
+    TodoService.prototype.getById = function (todoId) {
+        var filtered = this.todos.filter(function (x) { return x.id == todoId; });
+        if (filtered.length) {
+            return filtered[0];
+        }
+        return null;
+    };
+    TodoService.prototype.delete = function (todoId) {
+        var toDelete = this.getById(todoId);
+        var deletedIndex = this.todos.indexOf(toDelete);
+        this.todos.splice(deletedIndex, 1);
     };
     return TodoService;
 }());

@@ -1,29 +1,43 @@
-export {};
-interface Todo {
-    name:string;
-    state:TodoState;
+interface IIdGenerator {
+    nextId: number;
 }
-enum TodoState {
-    New = 1,
-    Active, Complete, Deleted
-}
-class TodoService {
+
+class TodoService implements ITodoService, IIdGenerator {
     private static _lastId: number = 0;
-    private get nextId() {
+    get nextId() {
         return TodoService.getNextId();
     }
-    private set nextId(nextId){
+    set nextId(nextId){
         TodoService._lastId = nextId - 1;
     }
     constructor(private todos: Todo[]) {}
-    add(todo: Todo) {
-        var newId = this.nextId;
+    add(todo: Todo): Todo {
+        todo.id = this.nextId;
+        this.todos.push(todo);
+        return todo;
     }
-    private getAll() {
-        return this.todos;
+    getAll(): Todo[] {
+        //actual todo items exposed to manipulation
+        //return this.todos;
+        //performant way to clone objects
+        var clone = JSON.stringify(this.todos);
+        return JSON.parse(clone);
     }
     static getNextId(): number {
         return TodoService._lastId += 1;
+    }
+    getById(todoId: number):Todo {
+        var filtered = 
+            this.todos.filter(x=>x.id == todoId);
+        if (filtered.length) {
+            return filtered[0];
+        }
+        return null;
+    }
+    delete(todoId: number): void {
+        var toDelete = this.getById(todoId);
+        var deletedIndex = this.todos.indexOf(toDelete);
+        this.todos.splice(deletedIndex,1);
     }
 }
 abstract class TodoStateChanger {
