@@ -1,3 +1,10 @@
+//not possible in JS; function overload not same as in C#/Java
+//in JS, only 1 implementation; or 2nd just overwrites the first
+//function totalLen(x: string, y: string): number {}
+//function totalLen(x: any[], y: any[]): number {}
+
+function totalLen(x: string, y: string): number
+function totalLen(x: any[], y: any[]): number
 function totalLen(x: (string|any[]), 
                   y: (string|any[])): number { 
     let total: number = x.length + y.length;
@@ -14,4 +21,4 @@ function totalLen(x: (string|any[]),
     }
     return total;
 }
-
+totalLen([1,2,3],'hello')
