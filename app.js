@@ -1,15 +1,19 @@
 var animal = {
     name: "Fido",
     species: "Dog",
-    age: 5,
+    age: getAge(2017),
     speak: function () {
         console.log('Woof');
-    }
+    },
 };
-function makeAnimalSpeak(animal) {
-    //duck-typing
-    //function doesn't check if the object is a certain type
-    //or if the method exists before calling it
-    animal.speak();
+function getAge(byear) {
+    return Date.now() - byear;
 }
-makeAnimalSpeak(animal);
+//function totalLen(x: any,y: any): any 
+//since every object has a length property
+//TypeScript can't figure out the type
+//-> any
+function totalLen(x, y) {
+    var total = x.length + y.length;
+    return total;
+}
