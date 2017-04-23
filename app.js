@@ -21,10 +21,6 @@ var TodoStateChanger = (function () {
     function TodoStateChanger(newState) {
         this.newState = newState;
     }
-    //whether todo may be changed to new state
-    TodoStateChanger.prototype.canChangeState = function (todo) {
-        return !!todo;
-    };
     TodoStateChanger.prototype.changeState = function (todo) {
         if (this.canChangeState(todo)) {
             todo.state = this.newState;
@@ -33,6 +29,7 @@ var TodoStateChanger = (function () {
     };
     return TodoStateChanger;
 }());
+//new TodoStateChanger();
 var CompleteTodoStateChanger = (function (_super) {
     __extends(CompleteTodoStateChanger, _super);
     function CompleteTodoStateChanger() {
@@ -42,7 +39,7 @@ var CompleteTodoStateChanger = (function (_super) {
         //without overrideing all the logic; just extend
         //continue to access methods defined in base
         //even though it is being overriden
-        return _super.prototype.canChangeState.call(this, todo) && (todo.state == TodoState.Active
+        return !!todo && (todo.state == TodoState.Active
             || todo.state == TodoState.Deleted);
     };
     return CompleteTodoStateChanger;

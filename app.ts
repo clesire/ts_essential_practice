@@ -7,12 +7,11 @@ enum TodoState {
     New = 1,
     Active, Complete, Deleted
 }
-class TodoStateChanger {
+abstract class TodoStateChanger {
     constructor(private newState: TodoState) {}
     //whether todo may be changed to new state
-    canChangeState(todo: Todo): boolean {
-        return !!todo;
-    }
+    abstract canChangeState(todo: Todo): boolean;
+
     changeState(todo: Todo): Todo {
         if(this.canChangeState(todo)) {
             todo.state = this.newState;
@@ -20,6 +19,7 @@ class TodoStateChanger {
         return todo;
     }
 }
+//new TodoStateChanger();
 class CompleteTodoStateChanger extends TodoStateChanger {
     constructor() {
         super(TodoState.Complete);
@@ -28,7 +28,7 @@ class CompleteTodoStateChanger extends TodoStateChanger {
         //without overrideing all the logic; just extend
         //continue to access methods defined in base
         //even though it is being overriden
-        return super.canChangeState(todo) && (
+        return !!todo && (
             todo.state == TodoState.Active
             || todo.state == TodoState.Deleted
         )
