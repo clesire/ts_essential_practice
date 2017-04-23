@@ -1,21 +1,32 @@
 export {};
-//function TodoService() {   
-//     this.todos = [];
+//ES5
+// function TodoService() {}
+// TodoService.lastId = 0;
+// TodoService.getNextId = function() {
+//         return TodoService.lastId += 1;
 // }
-// TodoService.prototype.getAll = function() {
-//     return this.todos;
+// TodoService.prototype.add = function(todo) {
+//     var newId = TodoService.getNextId();
 // }
-
+//ES6
 class TodoService {
-    // todos: Todo[] = [];
-    // constructor(todos: Todo[]) {
-    //     this.todos = todos;
-    // }
-    //the above can be shortened to 
-    //(defining a constructor param and a class prop)
-    constructor(private todos: Todo[]){
+    static lastId: number = 0;
+    constructor(private todos: Todo[]) {}
+    add(todo: Todo) {
+        var newId = TodoService.getNextId();
     }
     getAll() {
-
+        return this.todos;
     }
+    static getNextId(): number {
+        return TodoService.lastId += 1;
+    }
+}
+interface Todo {
+    name:string;
+    state:TodoState;
+}
+enum TodoState {
+    New = 1,
+    Active, Complete, Deleted
 }
