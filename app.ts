@@ -1,20 +1,12 @@
 export {};
-interface Todo {
-    name: string;
-    state: TodoState;
-}
-var todo: Todo = {
-    name: "Pick up laundry",
-    state: TodoState.New
-}
-enum TodoState {
-    New = 1,
-    Active,
-    Complete,
-    Deleted
-}
-function delete1(todo1: Todo){
-    if (todo1.state != TodoState.Complete) {
-        throw new Error("Can't delete incomplete task");
-    }
+var todo: { name:string };
+
+//error
+//todo = { age:41 }
+
+//accept any 2 variables that has a length prop
+function totalLen(x: {length:number}, 
+                  y: {length:number}): number {
+    var total: number = x.length + y.length;
+    return total;
 }
