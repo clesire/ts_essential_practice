@@ -1,12 +1,9 @@
 export {};
-var todo: { name:string };
-
-//error
-//todo = { age:41 }
-
-//accept any 2 variables that has a length prop
-function totalLen(x: {length:number}, 
-                  y: {length:number}): number {
-    var total: number = x.length + y.length;
-    return total;
+function TodoService() {   
+    this.todos = [];
 }
+TodoService.prototype.getAll = function() {
+    return this.todos;
+}
+var service = new TodoService();
+service.getAll();
