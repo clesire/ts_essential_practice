@@ -1,10 +1,15 @@
-var osPrefix = 'os_';
-var support = (_a = {},
-    _a[osPrefix + 'Windows'] = isSupported('Windows'),
-    _a[osPrefix + 'iOS'] = isSupported('iOS'),
-    _a[osPrefix + 'Android'] = isSupported('Android'),
-    _a);
-function isSupported(os) {
-    return Math.random() >= 0.5;
+var animal = {
+    name: "Fido",
+    species: "Dog",
+    age: 5,
+    speak: function () {
+        console.log('Woof');
+    }
+};
+function makeAnimalSpeak(animal) {
+    //duck-typing
+    //function doesn't check if the object is a certain type
+    //or if the method exists before calling it
+    animal.speak();
 }
-var _a;
+makeAnimalSpeak(animal);

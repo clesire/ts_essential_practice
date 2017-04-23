@@ -1,10 +1,15 @@
-const osPrefix = 'os_';
-var support = {
-    [osPrefix + 'Windows']: isSupported('Windows'),
-    [osPrefix + 'iOS']: isSupported('iOS'),
-    [osPrefix + 'Android']: isSupported('Android'),
+var animal = {
+    name: "Fido",
+    species: "Dog",
+    age: 5,
+    speak: function() {
+        console.log('Woof');
+    }
 }
-
-function isSupported(os) {
-    return Math.random() >= 0.5;
+function makeAnimalSpeak(animal) {
+    //duck-typing
+    //function doesn't check if the object is a certain type
+    //or if the method exists before calling it
+    animal.speak();
 }
+makeAnimalSpeak(animal);
