@@ -1,32 +1,34 @@
-var array = [123, "pick up drycleaning", false];
-var id = array[0], title = array[1], completed = array[2];
-var a = 1;
-var b = 5;
-//before to swap
-var temp = a;
-a = b;
-b = temp;
-//with destructuring
-_a = [b, a], a = _a[0], b = _a[1];
-//also work with objects or mapping function return vals
-//the values assinged not by locaions, 
-//but by matching the name of the property & variable
-function getTodo(id) {
-    var todo = {
-        id_o: 123,
-        title_o: "pick up drycleaning",
-        completed_o: false
-    };
-    return todo;
-}
-var _b = getTodo(123), todoId = _b.id_o, title_o = _b.title_o, completed_o = _b.completed_o;
-//countdown function from 2.optional_param
-function countdown(_a) {
-    var initial = _a.initial, _b = _a.final, final = _b === void 0 ? 0 : _b, _c = _a.interval, interval = _c === void 0 ? 1 : _c, current = _a.initial;
-    var current = initial;
-    while (current > final) {
-        console.log(current);
-        current -= interval;
+function add() {
+    var values = Array.prototype.splice.call(arguments, [1]), total = 0;
+    for (var _i = 0, values_1 = values; _i < values_1.length; _i++) {
+        var value = values_1[_i];
+        total += value;
     }
+    return total;
 }
-var _a;
+function calculate(action) {
+    var values = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        values[_i - 1] = arguments[_i];
+    }
+    var total = 0;
+    for (var _a = 0, values_2 = values; _a < values_2.length; _a++) {
+        var value = values_2[_a];
+        switch (action) {
+            case 'add':
+                total += value;
+                break;
+            case 'sub':
+                total -= value;
+                break;
+        }
+    }
+    return total;
+}
+calculate('add', 1, 2, 3, 4, 5);
+var source = [3, 4, 5];
+var target = [1, 2].concat(source, [6, 7]);
+var list = [1, 2, 3];
+var toAdd = [4, 5, 6];
+//Array.prototype.push.apply(list, toAdd);
+list.push.apply(list, toAdd);

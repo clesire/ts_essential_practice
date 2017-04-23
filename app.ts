@@ -1,41 +1,33 @@
-var array = [123, "pick up drycleaning", false];
-var [id, title, completed] = array;
+function add() {
+    var values = Array.prototype.splice.call(arguments, [1]),
+        total = 0;
 
-var a=1;
-var b=5;
-
-//before to swap
-var temp=a;
-a=b;
-b=temp;
-//with destructuring
-[a,b] = [b,a];
-
-//also work with objects or mapping function return vals
-//the values assinged not by locaions, 
-//but by matching the name of the property & variable
-function getTodo(id) {
-    var todo = {
-        id_o:123,
-        title_o: "pick up drycleaning",
-        completed_o: false
+    for (var value of values) {
+        total += value;
     }
-    return todo;
+    return total;
 }
 
-var {id_o: todoId, title_o, completed_o} = getTodo(123);
-
-//countdown function from 2.optional_param
-function countdown({ 
-    initial, 
-    final: final=0,
-    interval: interval=1,
-    initial: current    
-}) {
-
-    var current = initial;
-    while (current > final) {
-        console.log(current);
-        current -= interval;
+function calculate(action, ...values) {
+    var total = 0;
+    for (var value of values) {
+        switch(action){
+            case 'add':
+                total += value;
+                break;
+            case 'sub':
+                total -= value;
+                break;
+        }
     }
+    return total;
 }
+calculate('add', 1,2,3,4,5);
+
+var source = [3,4,5];
+var target = [1,2, ...source, 6,7];
+
+var list = [1,2,3];
+var toAdd = [4,5,6];
+//Array.prototype.push.apply(list, toAdd);
+list.push(...toAdd);
