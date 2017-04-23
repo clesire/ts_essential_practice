@@ -17,6 +17,32 @@ var TodoState;
     TodoState[TodoState["Complete"] = 3] = "Complete";
     TodoState[TodoState["Deleted"] = 4] = "Deleted";
 })(TodoState || (TodoState = {}));
+var TodoService = (function () {
+    function TodoService(todos) {
+        this.todos = todos;
+    }
+    Object.defineProperty(TodoService.prototype, "nextId", {
+        get: function () {
+            return TodoService.getNextId();
+        },
+        set: function (nextId) {
+            TodoService._lastId = nextId - 1;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TodoService.prototype.add = function (todo) {
+        var newId = this.nextId;
+    };
+    TodoService.prototype.getAll = function () {
+        return this.todos;
+    };
+    TodoService.getNextId = function () {
+        return TodoService._lastId += 1;
+    };
+    return TodoService;
+}());
+TodoService._lastId = 0;
 var TodoStateChanger = (function () {
     function TodoStateChanger(newState) {
         this.newState = newState;
@@ -44,3 +70,9 @@ var CompleteTodoStateChanger = (function (_super) {
     };
     return CompleteTodoStateChanger;
 }(TodoStateChanger));
+var SmartTodo = (function () {
+    function SmartTodo(name) {
+        this.name = name;
+    }
+    return SmartTodo;
+}());
