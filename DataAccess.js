@@ -31,3 +31,4 @@ var TodoService = (function () {
     };
     return TodoService;
 }());
+exports.TodoService = TodoService;

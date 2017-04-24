@@ -5,8 +5,16 @@
 //EMCAScript: a standard that will have native
 //browser support
 import { Todo, TodoState } from './model';
-let todo: Todo;
+import { TodoService } from './dataAccess';
 
-//if have a script that modifies the environment
-//depending on the module getting loaded
-import './jQuery'
+let service = new TodoService([]);
+service.add({
+    id: 1,
+    name: 'pick up laundry',
+    state: TodoState.New,
+});
+
+let todos = service.getAll();
+todos.forEach(todo => 
+    console.log(`${todo.name} [${TodoState[todo.state]}]`)
+)
