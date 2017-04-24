@@ -1,12 +1,12 @@
-var jQuery = {
-    version: 1.19,
-    fn: {}
-};
-(function defineType($) {
-    if ($.version < 1.15) {
-        throw 'Plugin requires jQuery version 1.15+';
-    }
-    $.fn.myPlugin = function() {
-        //my plugin code
-    }
-})()
+//require syntax
+//import Model = require('./model');
+//import Todo = Model.Todo;
+
+//EMCAScript: a standard that will have native
+//browser support
+import { Todo, TodoState } from './model';
+let todo: Todo;
+
+//if have a script that modifies the environment
+//depending on the module getting loaded
+import './jQuery'
