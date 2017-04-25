@@ -1,5 +1,11 @@
 System.register(["./Model"], function (exports_1, context_1) {
     "use strict";
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
     var __moduleName = context_1 && context_1.id;
     function generateTodoId() {
         return _lastId += 1;
@@ -8,7 +14,26 @@ System.register(["./Model"], function (exports_1, context_1) {
         var clone = JSON.stringify(src);
         return JSON.parse(clone);
     }
-    var Model_1, _lastId, TodoService;
+    //target:the object that the member lives on.
+    //e.g. an instance of a to do service
+    //method name: the name of the method to be decorated
+    //descriptor: an object that contains all of the meta data
+    //for the method that you are looking to modify
+    function log(target, methodName, descriptor) {
+        descriptor.value;
+        var originalMethod = TodoService.prototype.add;
+        TodoService.prototype.add = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            console.log(methodName + "(" + JSON.stringify(args) + ")");
+            var returnValue = originalMethod.apply(this, args);
+            console.log(methodName + "(" + JSON.stringify(args) + ") => " + returnValue);
+            return returnValue;
+        };
+    }
+    var Model_1, _lastId, TodoService, originalMethod;
     return {
         setters: [
             function (Model_1_1) {
@@ -75,7 +100,27 @@ System.register(["./Model"], function (exports_1, context_1) {
                 };
                 return TodoService;
             }());
+            __decorate([
+                log
+            ], TodoService.prototype, "add", null);
             exports_1("default", TodoService);
+            //to add the logging logic without changing the code
+            //inside of the add method, wrap the original method
+            //in another method.
+            //It replaces the original method with another method 
+            //by actually calling that original method, 
+            //and then returning its result.
+            originalMethod = TodoService.prototype.add;
+            TodoService.prototype.add = function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                console.log("add(" + JSON.stringify(args) + ")");
+                var returnValue = originalMethod.apply(this, args);
+                console.log("add(" + JSON.stringify(args) + ") => " + returnValue);
+                return returnValue;
+            };
         }
     };
 });
