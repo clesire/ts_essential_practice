@@ -1,11 +1,12 @@
 //simply a UI component that handles the rendering of Todo items
 //lets other components know about the user's actions
 //by raising a DOM event
-
+import { Todo, TodoState } from './Model'
+import '//code.jquery.com/jquery-1.12.1.min.js';
 declare var $: any;
 
- class TodoListComponent {
-   private $el: jQuery;
+export default class TodoListComponent {
+   private $el: JQuery;
    constructor(el: HTMLElement) {
      this.$el = $(el);
    }

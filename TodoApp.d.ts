@@ -1,4 +1,4 @@
-declare class TodoApp {
+export declare class TodoApp {
     private todoService;
     private todoList;
     constructor(el: any, todos: any);
