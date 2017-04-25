@@ -23,6 +23,22 @@ System.register([], function (exports_1, context_1) {
         target.prototype.validate = validate;
     }
     exports_1("validatable", validatable);
+    function required(target, propertyName) {
+        var validatable = target, validators = (validatable._validators
+            || (validatable._validators = []));
+        validators.push(function (instance) {
+            var propertyValue = instance[propertyName], isValid = propertyValue != undefined;
+            if (typeof propertyValue === 'string') {
+                isValid = propertyValue && propertyValue.length > 0;
+            }
+            return {
+                isValid: isValid,
+                message: propertyName + " is required",
+                property: propertyName
+            };
+        });
+    }
+    exports_1("required", required);
     var ValidatableTodo;
     return {
         setters: [],
@@ -32,12 +48,13 @@ System.register([], function (exports_1, context_1) {
                 }
                 return ValidatableTodo;
             }());
+            __decorate([
+                required
+            ], ValidatableTodo.prototype, "name", void 0);
             ValidatableTodo = __decorate([
                 validatable
             ], ValidatableTodo);
             exports_1("ValidatableTodo", ValidatableTodo);
-            //without decorator
-            //ValidatableTodo.prototype.validate = validate; 
         }
     };
 });
