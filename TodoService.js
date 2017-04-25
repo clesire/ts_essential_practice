@@ -1,4 +1,4 @@
-System.register(["./Model"], function (exports_1, context_1) {
+System.register(["./Model", "./Validators"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -33,11 +33,14 @@ System.register(["./Model"], function (exports_1, context_1) {
             return returnValue;
         };
     }
-    var Model_1, _lastId, TodoService, originalMethod;
+    var Model_1, Validators_1, _lastId, TodoService, originalMethod;
     return {
         setters: [
             function (Model_1_1) {
                 Model_1 = Model_1_1;
+            },
+            function (Validators_1_1) {
+                Validators_1 = Validators_1_1;
             }
         ],
         execute: function () {
@@ -51,11 +54,9 @@ System.register(["./Model"], function (exports_1, context_1) {
                     }
                 }
                 TodoService.prototype.add = function (input) {
-                    var todo = {
-                        id: generateTodoId(),
-                        name: null,
-                        state: Model_1.TodoState.Active
-                    };
+                    var todo = new Validators_1.ValidatableTodo();
+                    todo.id = generateTodoId();
+                    todo.state - Model_1.TodoState.Active;
                     if (typeof input === 'string') {
                         todo.name = input;
                     }
@@ -64,6 +65,11 @@ System.register(["./Model"], function (exports_1, context_1) {
                     }
                     else {
                         throw "Invalid Todo name!";
+                    }
+                    var errors = todo.validate();
+                    if (errors.length) {
+                        var combinedErrors = errors.map(function (x) { return x.property + ":" + x.message; });
+                        throw "Invalid Todo: " + combinedErrors;
                     }
                     this.todos.push(todo);
                     return todo;

@@ -1,4 +1,6 @@
 import { Todo, TodoState } from './Model'
+import { ValidatableTodo } from './Validators'
+
 export interface ITodoService {
     add(todo: Todo): Todo;
     add(todo: string): Todo;
@@ -30,17 +32,23 @@ export default class TodoService implements ITodoService {
     add(todo: string): Todo
     @log
     add (input): Todo {
-        var todo: Todo ={
-            id: generateTodoId(),
-            name: null,
-            state: TodoState.Active
-        };
+        var todo = new ValidatableTodo();
+        todo.id = generateTodoId();
+        todo.state - TodoState.Active;
+
         if (typeof input === 'string'){
             todo.name = input;
         } else if (typeof input.name === 'string') {
             todo.name = input.name;
         } else {
             throw "Invalid Todo name!";
+        }
+
+        let errors = todo.validate();
+        if(errors.length){
+            let combinedErrors = errors.map(
+                x=> `${x.property}:${x.message}`);
+            throw `Invalid Todo: ${combinedErrors}`;
         }
         this.todos.push(todo);
         return todo;
